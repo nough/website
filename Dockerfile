@@ -9,5 +9,5 @@ RUN pip install -r requirements.txt
 ENV FLASK_APP hackspace_website:create_app
 ENV FLASK_ENV development
 EXPOSE 5000
-CMD ["flask"]
-#ENTRYPOINT ["flask run"]
+#CMD ["flask"]
+ENTRYPOINT ["flask", "run"]
