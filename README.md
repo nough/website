@@ -116,3 +116,8 @@ WARNING: This is a development server. Do not use it in a production deployment.
 ```
 
 With the server running, in a browser navigate to: http://127.0.0.1:5000
+
+# Podman Container
+- currently no way to pass in the config file, so this needs to be saved in the container before building it.
+- build with `podman build -t website:latest .`
+- run with `podman run --name hsweb -p 8000:5000 --rm localhost/website:latest flask run`
