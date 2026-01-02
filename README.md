@@ -185,3 +185,11 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 3
 openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 3650 -nodes -subj "/C=XX/ST=StateName/L=CityName/O=CompanyName/OU=CompanySectionName/CN=CommonNameOrHostname"
 ```
 https://stackoverflow.com/questions/10175812/how-can-i-generate-a-self-signed-ssl-certificate-using-openssl
+
+# Gunicorn
+
+Started implementing gunicorn WSGI server for production use, as you don't want to be running flask as a production server (it tells you that itself!). 
+
+Managed to get it running manually by going in to the podman-compose container with `podman exec -it website_website_1 sh` and running the command `gunicorn -w 4 'hackspace_website:create_app()' -b 0.0.0.0`. This was then able to be accessed both external to the container (on the host machine, if hte ports were open) and through nginx.
+
+Tried updating the dockerfile with the new entrypoint, but not yet been able to get this to work.

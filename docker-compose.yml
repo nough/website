@@ -3,8 +3,9 @@ services:
   website:
     build:
       context: .
-    # ports:  # if you want to test that the website itself is working, uncomment this and access at port 5000
-    #   - "5000:5000"
+    ports:  # if you want to test that the website itself is working, uncomment this and access at port 5000
+      - "5000:5000"  # for flask
+      - "8000:8000"  # for Gunicorn
   nginx:
     image: nginx:alpine
     volumes: 
