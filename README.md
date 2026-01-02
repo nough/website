@@ -120,7 +120,61 @@ With the server running, in a browser navigate to: http://127.0.0.1:5000
 
 # Container!
 
+### Clone the repo
+
+```bash
+git clone https://github.com/bristolhackspace/website.git
+
+cd website
+```
+
+### Create example config file
+
+This is a one-off config, if you already created the file you can skip this step.
+
+```bash
+mkdir instance
+cd instance
+cat << 'EOF' > config.toml
+#Fake
+MOSPARO_ENABLED = false
+MOSPARO_HOST="localhost"
+MOSPARO_PUBLIC_KEY="0x000"
+MOSPARO_PRIVATE_KEY="0x001"
+MOSPARO_UUID="12345"
+SECRET_KEY='01234567890'
+EOF
+```
+
+Verify the contents of the config.toml
+
+```bash
+cat config.toml
+```
+
+### Build the container and stand it up.
+
 You can stand up the container with `podman-compose up --build`
+
+Alternatively, build the container with `podman build . -t latest` and then follow the Quadlet instructions below to stand up the service containers.
+```
+cp -r .config ~
+systemctl --user daemon-reload
+systemctl --user start website.service
+systemctl --user start nginx.service
+systemctl --user status website.service nginx.service
+```
+And to kill those services and clean them up
+```
+systemctl --user stop website.service nginx.service
+rm ~/.config/containers/systemd/website.service
+rm ~/.config/containers/systemd/nginx.service
+rm ~/.config/containers/systemd/nginx.network
+systemctl --user daemon-reload
+podman network prune
+```
+
+### SSL
 
 you'll need ssl certs if you want to use ssl (and don't have them set up for your dev environment yet). I do NOT recommend using this in production - HS already has a working certificate process.
 ```
